@@ -55,7 +55,7 @@ class BlogPostController extends FOSRestController
      *     section="Blog Post",
      *     description="create blog post"
      * )
-     * @Route(name="api.blog_post.create", path="/blog-post")
+     * @Route(name="api.blog_post.create", path="/blog-post/create")
      * @Method("PUT")
      *
      * @return \FOS\RestBundle\View\View
