@@ -1,0 +1,52 @@
+<?php
+
+$header = '';
+
+return PhpCsFixer\Config::create()
+    ->setRiskyAllowed(false)
+    ->setRules([
+        '@PSR2' => true,
+        '@PHP56Migration' => false,
+        '@Symfony' => true,
+        '@Symfony:risky' => false,
+        //'align_multiline_comment' => true,
+        'array_syntax' => ['syntax' => 'long'],
+        //'blank_line_before_statement' => true,
+        'braces' => ['position_after_functions_and_oop_constructs' => 'same'],
+        'combine_consecutive_unsets' => true,
+        // one should use PHPUnit methods to set up expected exception instead of annotations
+        'general_phpdoc_annotation_remove' => ['expectedException', 'expectedExceptionMessage', 'expectedExceptionMessageRegExp'],
+        'header_comment' => ['header' => $header],
+        'heredoc_to_nowdoc' => true,
+        'list_syntax' => ['syntax' => 'long'],
+        'method_argument_space' => ['keep_multiple_spaces_after_comma' => true],
+        'no_extra_consecutive_blank_lines' => ['break', 'continue', 'extra', 'return', 'throw', 'use', 'parenthesis_brace_block', 'square_brace_block', 'curly_brace_block'],
+        //'no_null_property_initialization' => true,
+        'no_short_echo_tag' => true,
+        //'no_unreachable_default_argument_value' => true,
+        'no_useless_else' => true,
+        'no_useless_return' => true,
+        'ordered_class_elements' => true,
+        'ordered_imports' => true,
+        //'php_unit_strict' => true,
+        'php_unit_test_class_requires_covers' => true,
+        'phpdoc_add_missing_param_annotation' => true,
+        'phpdoc_order' => true,
+        'semicolon_after_instruction' => true,
+        'single_blank_line_at_eof' => true,
+        'single_quote' => true,
+        'space_after_semicolon' => true,
+        'standardize_not_equals' => true,
+        //'strict_comparison' => true,
+        //'strict_param' => true,
+        'ternary_operator_spaces' => true,
+        'trailing_comma_in_multiline_array' => true,
+        'trim_array_spaces' => true,
+        'unary_operator_spaces' => true,
+    ])
+    ->setFinder(
+        PhpCsFixer\Finder::create()
+            ->exclude('tests/Fixtures')
+            ->in(__DIR__)
+    )
+    ;

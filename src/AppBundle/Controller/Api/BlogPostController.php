@@ -15,8 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Class BlogPostController.
  */
-class BlogPostController extends FOSRestController
-{
+class BlogPostController extends FOSRestController {
     /**
      * @ApiDoc(
      *     section="Blog Post",
@@ -28,8 +27,7 @@ class BlogPostController extends FOSRestController
      *
      * @return \FOS\RestBundle\View\View
      */
-    public function listPostsAction()
-    {
+    public function listPostsAction() {
         $repo = $this->getDoctrine()->getRepository('AppBundle:BlogPost');
 
         return $this->view($repo->findAll());
@@ -46,14 +44,14 @@ class BlogPostController extends FOSRestController
      * @return \FOS\RestBundle\View\View
      */
     public function createPostAction() {
-
         $blogPost = new BlogPost();
         $blogPost->setTitle('');
         $blogPost->setContent('');
         $manager = $this->getDoctrine()->getManager();
         $manager->persist($blogPost);
         $manager->flush();
-        return $this->view($blogPost->getId(),200);
+
+        return $this->view($blogPost->getId(), 200);
     }
 
     /**
@@ -69,23 +67,23 @@ class BlogPostController extends FOSRestController
      * @return \FOS\RestBundle\View\View
      */
     public function editPostAction(BlogPost $blogPost, Request $request) {
-
-        if($newTitle = $request->get('title')){
+        if ($newTitle = $request->get('title')) {
             $blogPost->setContent($newTitle);
         }
 
-        if($newContent = $request->get('content')){
+        if ($newContent = $request->get('content')) {
             $blogPost->setContent($newContent);
         }
 
-        if($newTags = $request->get('tags')){
-            $tagsArray = explode(',',$newTags);
+        if ($newTags = $request->get('tags')) {
+            $tagsArray = explode(',', $newTags);
             $blogPost->setTags($tagsArray);
         }
         $manager = $this->getDoctrine()->getManager();
         $manager->persist($blogPost);
         $manager->flush();
-        return $this->view('',200);
+
+        return $this->view('', 200);
     }
 
     /**
@@ -95,21 +93,22 @@ class BlogPostController extends FOSRestController
      * )
      * @Route(name="api.blog_post.publish", path="/blog-post/{blogPost}/{target}")
      * @Method("POST")
+     *
      * @param BlogPost $blogPost
      * @param $target
      *
      * @return \FOS\RestBundle\View\View
      */
-    public function publishPostAction(BlogPost $blogPost, $target)
-    {
+    public function publishPostAction(BlogPost $blogPost, $target) {
         try {
             $target = Factory::factory($target);
-        }catch (TargetNotExistsException $e){
-            return $this->view('',501);
+        } catch (TargetNotExistsException $e) {
+            return $this->view('', 501);
         }
 
         /* @var TargetInterface $target*/
         $target->publish($blogPost);
-        return $this->view('',200);
+
+        return $this->view('', 200);
     }
 }
