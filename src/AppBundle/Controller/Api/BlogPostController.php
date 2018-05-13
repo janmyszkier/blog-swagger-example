@@ -70,4 +70,36 @@ class BlogPostController extends FOSRestController
         $manager->flush();
         return $this->view($blogPost->getId(),200);
     }
+
+    /**
+     * @ApiDoc(
+     *     section="Blog Post",
+     *     description="update blog post"
+     * )
+     * @Route(name="api.blog_post.update", path="/blog-post/{blogPost}/update")
+     * @Method("POST")
+     *
+     * @param BlogPost $blogPost
+     *
+     * @return \FOS\RestBundle\View\View
+     */
+    public function editPostAction(BlogPost $blogPost, Request $request) {
+
+        if($newTitle = $request->get('title')){
+            $blogPost->setContent($newTitle);
+        }
+
+        if($newContent = $request->get('content')){
+            $blogPost->setContent($newContent);
+        }
+
+        if($newTags = $request->get('tags')){
+            $tagsArray = explode(',',$newTags);
+            $blogPost->setTags($tagsArray);
+        }
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($blogPost);
+        $manager->flush();
+        return $this->view('',200);
+    }
 }
