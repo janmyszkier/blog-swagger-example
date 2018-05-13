@@ -49,4 +49,25 @@ class BlogPostController extends FOSRestController
 
         return $this->view();
     }
+
+    /**
+     * @ApiDoc(
+     *     section="Blog Post",
+     *     description="create blog post"
+     * )
+     * @Route(name="api.blog_post.create", path="/blog-post")
+     * @Method("PUT")
+     *
+     * @return \FOS\RestBundle\View\View
+     */
+    public function createPostAction() {
+
+        $blogPost = new BlogPost();
+        $blogPost->setTitle('');
+        $blogPost->setContent('');
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($blogPost);
+        $manager->flush();
+        return $this->view($blogPost->getId(),200);
+    }
 }
